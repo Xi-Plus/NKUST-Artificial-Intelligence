@@ -44,6 +44,22 @@ class Puzzle:
                                 best_board = [board_next]
                             elif conflict == min_conflict:
                                 best_board.append(board_next)
+            elif self.mode == 3:
+                diffs = [(0, 1), (0, -1), (1, 0), (-1, 0),
+                         (1, 1), (1, -1), (-1, 1), (-1, -1)]
+                for i in range(self.size):
+                    for diff in diffs:
+                        nx = self.board[i][0] + diff[0]
+                        ny = self.board[i][1] + diff[1]
+                        if 0 <= nx < self.size and 0 <= ny < self.size:
+                            board_next = self.board.copy()
+                            board_next[i] = (nx, ny)
+                            conflict = self.calc_conflict(board_next)
+                            if conflict < min_conflict:
+                                min_conflict = conflict
+                                best_board = [board_next]
+                            elif conflict == min_conflict:
+                                best_board.append(board_next)
 
             if min_conflict < prev_conflict:
                 self.board = best_board[random.randint(0, len(best_board) - 1)]
@@ -62,7 +78,7 @@ class Puzzle:
         if self.mode == 1:
             self.board = [(i, random.randint(0, self.size - 1))
                           for i in range(self.size)]
-        elif self.mode == 2:
+        elif self.mode in [2, 3]:
             self.board = [(random.randint(0, self.size - 1), random.randint(0, self.size - 1))
                           for i in range(self.size)]
 
@@ -93,7 +109,7 @@ class Puzzle:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('size', type=int, nargs='?', default=8)
-    parser.add_argument('--mode', type=int, choices=[1, 2], default=1)
+    parser.add_argument('--mode', type=int, choices=[1, 2, 3], default=1)
     parser.add_argument('--run', type=int, default=1)
     args = parser.parse_args()
     print(args)
@@ -103,13 +119,13 @@ if __name__ == "__main__":
     puzzle = Puzzle(args.size, args.mode)
     if args.run <= 1:
         puzzle.run()
-        print(time.time() - start)
+        print('Time {0:.4f} s'.format(time.time() - start))
     else:
         sum_round = 0
         sum_step = 0
-        for i in range(args.run):
+        for i in range(1, args.run + 1):
             cnt_round, cnt_step = puzzle.run()
             sum_round += cnt_round
             sum_step += cnt_step
-        print(sum_round / args.run, sum_step / args.run,
-              (time.time() - start) / args.run)
+            print('Run {0}, {1:.2f} rounds, {2:.2f} steps, time {3:.4f} s'.format(
+                i, sum_round / i, sum_step / i, (time.time() - start) / i))
