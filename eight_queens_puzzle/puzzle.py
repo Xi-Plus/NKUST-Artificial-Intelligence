@@ -1,4 +1,5 @@
 import random
+import time
 
 
 class Puzzle:
@@ -60,8 +61,10 @@ class Puzzle:
 
 
 if __name__ == "__main__":
+    start = time.time()
     puzzle = Puzzle(8)
     puzzle.run()
+    print(time.time() - start)
     # sum_round = 0
     # sum_step = 0
     # times = 0
