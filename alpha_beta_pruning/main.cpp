@@ -91,11 +91,22 @@ class ABP {
 	}
 };
 
-int main() {
+int main(int argc, char* argv[]) {
 	//	ios::sync_with_stdio(false);
 	//	cin.tie(0);
+	char inputpath[100];
+	if (argc < 2) {
+		printf("Missing parameter\n");
+		string temps;
+		printf("file input:");
+		gets(inputpath);
+	} else {
+		strcpy(inputpath, argv[1]);
+	}
+	printf("file input: %s\n", inputpath);
+
 	fstream file;
-	file.open("3-3-2.txt", ios::in);
+	file.open(inputpath, ios::in);
 	if (!file.is_open()) {
 		cout << "file open failed" << endl;
 		return -1;
