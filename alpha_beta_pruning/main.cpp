@@ -96,6 +96,8 @@ class ABP {
 int main(int argc, char* argv[]) {
 	//	ios::sync_with_stdio(false);
 	//	cin.tie(0);
+	bool simpleoutput = false;
+	if (argc >= 3 && atoi(argv[2]) > 0) simpleoutput = true;
 	char inputpath[100];
 	if (argc < 2) {
 		printf("Missing parameter\n");
@@ -104,7 +106,11 @@ int main(int argc, char* argv[]) {
 		gets(inputpath);
 	} else {
 		strcpy(inputpath, argv[1]);
-		printf("file input: %s\n", inputpath);
+		if (simpleoutput) {
+			printf("%s\t", inputpath);
+		} else {
+			printf("file input: %s\n", inputpath);
+		}
 	}
 
 	fstream file;
@@ -117,8 +123,9 @@ int main(int argc, char* argv[]) {
 	file >> branch;
 	int level;
 	file >> level;
-	cout << "branch " << branch << " level " << level << endl;
-
+	if (!simpleoutput) {
+		cout << "branch " << branch << " level " << level << endl;
+	}
 	clock_t start_time = clock();
 
 	// Init object
@@ -142,11 +149,18 @@ int main(int argc, char* argv[]) {
 	// abp.dump();
 	// cout << "visit:" << endl;
 	// abp.dumpvisit();
-	cout << "ans: " << abp.arr[0] << endl;
-	cout << "visit cnt: " << abp.visitcnt << endl;
-	cout << "not visit: " << abp.powsumlist[level + 1] - abp.visitcnt << endl;
-
-	printf("It tooks %d milliseconds\n", (clock() - start_time) * 1000 / CLOCKS_PER_SEC);
+	int runtime = (clock() - start_time) * 1000 / CLOCKS_PER_SEC;
+	if (simpleoutput) {
+		cout << abp.arr[0] << "\t";
+		cout << abp.visitcnt << "\t";
+		cout << abp.powsumlist[level + 1] - abp.visitcnt << "\t";
+		cout << runtime << endl;
+	} else {
+		cout << "root result: " << abp.arr[0] << endl;
+		cout << "visit cnt: " << abp.visitcnt << endl;
+		cout << "not visit: " << abp.powsumlist[level + 1] - abp.visitcnt << endl;
+		printf("It tooks %d milliseconds\n", runtime);
+	}
 
 	return 0;
 }
