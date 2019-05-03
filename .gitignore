@@ -2,3 +2,4 @@
 *.pyc
 *.txt
 *.exe
+alpha_beta_pruning/testlib.h
