@@ -12,6 +12,7 @@ class ABP {
 	int* powsumlist;
 	int* arr;
 	bool* visit;
+	int visitcnt = 0;
 
    public:
 	ABP(int _branch, int _level) {
@@ -40,6 +41,7 @@ class ABP {
 
 	int dfs(int root, int now_level) {
 		visit[root] = 1;
+		visitcnt++;
 		if (now_level == level) {
 			// cout << "get " << root << " " << now_level << " " << arr[root] << endl;
 			return arr[root];
@@ -98,12 +100,12 @@ int main(int argc, char* argv[]) {
 	if (argc < 2) {
 		printf("Missing parameter\n");
 		string temps;
-		printf("file input:");
+		printf("file input: ");
 		gets(inputpath);
 	} else {
 		strcpy(inputpath, argv[1]);
+		printf("file input: %s\n", inputpath);
 	}
-	printf("file input: %s\n", inputpath);
 
 	fstream file;
 	file.open(inputpath, ios::in);
@@ -116,6 +118,8 @@ int main(int argc, char* argv[]) {
 	int level;
 	file >> level;
 	cout << "branch " << branch << " level " << level << endl;
+
+	clock_t start_time = clock();
 
 	// Init object
 	ABP abp(branch, level);
@@ -134,9 +138,15 @@ int main(int argc, char* argv[]) {
 	abp.run();
 
 	// Show result
-	cout << "tree:" << endl;
-	abp.dump();
-	cout << "visit:" << endl;
-	abp.dumpvisit();
+	// cout << "tree:" << endl;
+	// abp.dump();
+	// cout << "visit:" << endl;
+	// abp.dumpvisit();
+	cout << "ans: " << abp.arr[0] << endl;
+	cout << "visit cnt: " << abp.visitcnt << endl;
+	cout << "not visit: " << abp.powsumlist[level + 1] - abp.visitcnt << endl;
+
+	printf("It tooks %d milliseconds\n", (clock() - start_time) * 1000 / CLOCKS_PER_SEC);
+
 	return 0;
 }
