@@ -7,208 +7,152 @@ compiler:
 
 jobs:
   include:
-    - name: "2, 3, 10, 10"
+    - name: "BRANCH=2"
       script:
         - cd alpha_beta_pruning
         - mkdir data
-        - make BRANCH=2 LEVEL=3 LIMIT=10
-        - make BRANCH=2 LEVEL=4 LIMIT=10
-        - make BRANCH=2 LEVEL=5 LIMIT=10
-        - make BRANCH=2 LEVEL=6 LIMIT=10
-        - make BRANCH=2 LEVEL=7 LIMIT=10
-        - make BRANCH=2 LEVEL=8 LIMIT=10
-        - make BRANCH=2 LEVEL=9 LIMIT=10
-        - make BRANCH=2 LEVEL=10 LIMIT=10
-    - name: "2, 11, 15, 50"
+        - make BRANCH=2  LEVEL=3   LIMIT=10    ANS1=8     ANS2=0
+        - make BRANCH=2  LEVEL=4   LIMIT=10    ANS1=2     ANS2=9
+        - make BRANCH=2  LEVEL=5   LIMIT=10    ANS1=3     ANS2=1
+        - make BRANCH=2  LEVEL=6   LIMIT=10    ANS1=3     ANS2=32
+        - make BRANCH=2  LEVEL=7   LIMIT=10    ANS1=1     ANS2=117
+        - make BRANCH=2  LEVEL=8   LIMIT=10    ANS1=2     ANS2=260
+        - make BRANCH=2  LEVEL=9   LIMIT=10    ANS1=1     ANS2=388
+        - make BRANCH=2  LEVEL=10  LIMIT=10    ANS1=-2    ANS2=953
+        - make BRANCH=2  LEVEL=11  LIMIT=50    ANS1=14    ANS2=1885
+        - make BRANCH=2  LEVEL=12  LIMIT=50    ANS1=-4    ANS2=3359
+        - make BRANCH=2  LEVEL=13  LIMIT=50    ANS1=11    ANS2=9054
+        - make BRANCH=2  LEVEL=14  LIMIT=50    ANS1=-12   ANS2=18528
+        - make BRANCH=2  LEVEL=15  LIMIT=50    ANS1=12    ANS2=38535
+        - make BRANCH=2  LEVEL=16  LIMIT=100   ANS1=-25   ANS2=91762
+        - make BRANCH=2  LEVEL=17  LIMIT=100   ANS1=24    ANS2=175031
+        - make BRANCH=2  LEVEL=18  LIMIT=100   ANS1=-21   ANS2=368012
+        - make BRANCH=2  LEVEL=19  LIMIT=100   ANS1=23    ANS2=722635
+        - make BRANCH=2  LEVEL=20  LIMIT=100   ANS1=-24   ANS2=1626133
+        - make BRANCH=2  LEVEL=21  LIMIT=1000  ANS1=234   ANS2=2940932
+        - make BRANCH=2  LEVEL=22  LIMIT=1000  ANS1=-253  ANS2=6094616
+        - make BRANCH=2  LEVEL=23  LIMIT=1000  ANS1=242   ANS2=12802688
+        - make BRANCH=2  LEVEL=24  LIMIT=1000  ANS1=-238  ANS2=25468009
+        - make BRANCH=2  LEVEL=25  LIMIT=1000  ANS1=233   ANS2=53948656
+    - name: "BRANCH=3"
       script:
         - cd alpha_beta_pruning
         - mkdir data
-        - make BRANCH=2 LEVEL=11 LIMIT=50
-        - make BRANCH=2 LEVEL=12 LIMIT=50
-        - make BRANCH=2 LEVEL=13 LIMIT=50
-        - make BRANCH=2 LEVEL=14 LIMIT=50
-        - make BRANCH=2 LEVEL=15 LIMIT=50
-    - name: "2, 16, 20, 100"
+        - make BRANCH=3  LEVEL=2   LIMIT=10    ANS1=5    ANS2=0
+        - make BRANCH=3  LEVEL=3   LIMIT=10    ANS1=8    ANS2=14
+        - make BRANCH=3  LEVEL=4   LIMIT=10    ANS1=-4   ANS2=61
+        - make BRANCH=3  LEVEL=5   LIMIT=10    ANS1=5    ANS2=151
+        - make BRANCH=3  LEVEL=6   LIMIT=100   ANS1=-42  ANS2=589
+        - make BRANCH=3  LEVEL=7   LIMIT=100   ANS1=40   ANS2=2207
+        - make BRANCH=3  LEVEL=8   LIMIT=100   ANS1=-31  ANS2=6424
+        - make BRANCH=3  LEVEL=9   LIMIT=100   ANS1=37   ANS2=18683
+        - make BRANCH=3  LEVEL=10  LIMIT=100   ANS1=-37  ANS2=57936
+        - make BRANCH=3  LEVEL=11  LIMIT=1000  ANS1=364  ANS2=218273
+        - make BRANCH=3  LEVEL=12  LIMIT=1000  ANS1=-351 ANS2=636559
+        - make BRANCH=3  LEVEL=13  LIMIT=1000  ANS1=353  ANS2=2016486
+        - make BRANCH=3  LEVEL=14  LIMIT=1000  ANS1=-375 ANS2=5982791
+        - make BRANCH=3  LEVEL=15  LIMIT=1000  ANS1=366  ANS2=17784502
+    - name: "BRANCH=4"
       script:
         - cd alpha_beta_pruning
         - mkdir data
-        - make BRANCH=2 LEVEL=16 LIMIT=100
-        - make BRANCH=2 LEVEL=17 LIMIT=100
-        - make BRANCH=2 LEVEL=18 LIMIT=100
-        - make BRANCH=2 LEVEL=19 LIMIT=100
-        - make BRANCH=2 LEVEL=20 LIMIT=100
-    - name: "2, 21, 25, 1000"
+        - make BRANCH=4  LEVEL=2   LIMIT=50    ANS1=-28  ANS2=3
+        - make BRANCH=4  LEVEL=3   LIMIT=50    ANS1=33   ANS2=19
+        - make BRANCH=4  LEVEL=4   LIMIT=50    ANS1=-9   ANS2=148
+        - make BRANCH=4  LEVEL=5   LIMIT=50    ANS1=28   ANS2=733
+        - make BRANCH=4  LEVEL=6   LIMIT=100   ANS1=-54  ANS2=3749
+        - make BRANCH=4  LEVEL=7   LIMIT=100   ANS1=50   ANS2=15724
+        - make BRANCH=4  LEVEL=8   LIMIT=100   ANS1=-45  ANS2=65090
+        - make BRANCH=4  LEVEL=9   LIMIT=100   ANS1=47   ANS2=290244
+        - make BRANCH=4  LEVEL=10  LIMIT=100   ANS1=-46  ANS2=1210061
+        - make BRANCH=4  LEVEL=11  LIMIT=1000  ANS1=457  ANS2=5138351
+        - make BRANCH=4  LEVEL=12  LIMIT=1000  ANS1=-452 ANS2=19827254
+    - name: "BRANCH=5"
       script:
         - cd alpha_beta_pruning
         - mkdir data
-        - make BRANCH=2 LEVEL=21 LIMIT=1000
-        - make BRANCH=2 LEVEL=22 LIMIT=1000
-        - make BRANCH=2 LEVEL=23 LIMIT=1000
-        - make BRANCH=2 LEVEL=24 LIMIT=1000
-        - make BRANCH=2 LEVEL=25 LIMIT=1000
-    - name: "3, 2, 5, 10"
+        - make BRANCH=5  LEVEL=2   LIMIT=50   ANS1=-11   ANS2=11
+        - make BRANCH=5  LEVEL=3   LIMIT=50   ANS1=32    ANS2=64
+        - make BRANCH=5  LEVEL=4   LIMIT=50   ANS1=-24   ANS2=459
+        - make BRANCH=5  LEVEL=5   LIMIT=50   ANS1=25    ANS2=2673
+        - make BRANCH=5  LEVEL=6   LIMIT=500  ANS1=-247  ANS2=14278
+        - make BRANCH=5  LEVEL=7   LIMIT=500  ANS1=252   ANS2=73703
+        - make BRANCH=5  LEVEL=8   LIMIT=500  ANS1=-251  ANS2=412667
+        - make BRANCH=5  LEVEL=9   LIMIT=500  ANS1=257   ANS2=2183236
+        - make BRANCH=5  LEVEL=10  LIMIT=500  ANS1=-256  ANS2=10867856
+    - name: "BRANCH=6"
       script:
         - cd alpha_beta_pruning
         - mkdir data
-        - make BRANCH=3 LEVEL=2 LIMIT=10
-        - make BRANCH=3 LEVEL=3 LIMIT=10
-        - make BRANCH=3 LEVEL=4 LIMIT=10
-        - make BRANCH=3 LEVEL=5 LIMIT=10
-    - name: "3, 6, 10, 100"
+        - make BRANCH=6  LEVEL=2  LIMIT=100   ANS1=-5     ANS2=1
+        - make BRANCH=6  LEVEL=3  LIMIT=100   ANS1=81     ANS2=132
+        - make BRANCH=6  LEVEL=4  LIMIT=100   ANS1=-58      ANS2=879
+        - make BRANCH=6  LEVEL=5  LIMIT=100   ANS1=62     ANS2=7193
+        - make BRANCH=6  LEVEL=6  LIMIT=1000  ANS1=-542      ANS2=45648
+        - make BRANCH=6  LEVEL=7  LIMIT=1000  ANS1=577     ANS2=286871
+        - make BRANCH=6  LEVEL=8  LIMIT=1000  ANS1=-547      ANS2=1760016
+        - make BRANCH=6  LEVEL=9  LIMIT=1000  ANS1=561     ANS2=11378046
+    - name: "BRANCH=7"
       script:
         - cd alpha_beta_pruning
         - mkdir data
-        - make BRANCH=3 LEVEL=6 LIMIT=100
-        - make BRANCH=3 LEVEL=7 LIMIT=100
-        - make BRANCH=3 LEVEL=8 LIMIT=100
-        - make BRANCH=3 LEVEL=9 LIMIT=100
-        - make BRANCH=3 LEVEL=10 LIMIT=100
-    - name: "3, 11, 15, 1000"
+        - make BRANCH=7  LEVEL=2  LIMIT=100   ANS1=-47      ANS2=10
+        - make BRANCH=7  LEVEL=3  LIMIT=100   ANS1=65     ANS2=246
+        - make BRANCH=7  LEVEL=4  LIMIT=100   ANS1=-52      ANS2=1395
+        - make BRANCH=7  LEVEL=5  LIMIT=100   ANS1=58     ANS2=15640
+        - make BRANCH=7  LEVEL=6  LIMIT=1000  ANS1=-587      ANS2=115729
+        - make BRANCH=7  LEVEL=7  LIMIT=1000  ANS1=602     ANS2=813416
+        - make BRANCH=7  LEVEL=8  LIMIT=1000  ANS1=-588      ANS2=6125492
+    - name: "BRANCH=8"
       script:
         - cd alpha_beta_pruning
         - mkdir data
-        - make BRANCH=3 LEVEL=11 LIMIT=1000
-        - make BRANCH=3 LEVEL=12 LIMIT=1000
-        - make BRANCH=3 LEVEL=13 LIMIT=1000
-        - make BRANCH=3 LEVEL=14 LIMIT=1000
-        - make BRANCH=3 LEVEL=15 LIMIT=1000
-    - name: "4, 2, 5, 50"
+        - make BRANCH=8  LEVEL=2  LIMIT=100   ANS1=-55    ANS2=20
+        - make BRANCH=8  LEVEL=3  LIMIT=100   ANS1=71     ANS2=340
+        - make BRANCH=8  LEVEL=4  LIMIT=100   ANS1=-61    ANS2=3155
+        - make BRANCH=8  LEVEL=5  LIMIT=1000  ANS1=626    ANS2=31248
+        - make BRANCH=8  LEVEL=6  LIMIT=1000  ANS1=-594   ANS2=257475
+        - make BRANCH=8  LEVEL=7  LIMIT=1000  ANS1=625    ANS2=2102156
+        - make BRANCH=8  LEVEL=8  LIMIT=1000  ANS1=-625   ANS2=17975627
+    - name: "BRANCH=9"
       script:
         - cd alpha_beta_pruning
         - mkdir data
-        - make BRANCH=4 LEVEL=2 LIMIT=50
-        - make BRANCH=4 LEVEL=3 LIMIT=50
-        - make BRANCH=4 LEVEL=4 LIMIT=50
-        - make BRANCH=4 LEVEL=5 LIMIT=50
-    - name: "4, 6, 10, 100"
+        - make BRANCH=9  LEVEL=2  LIMIT=100   ANS1=-31    ANS2=54
+        - make BRANCH=9  LEVEL=3  LIMIT=100   ANS1=69     ANS2=378
+        - make BRANCH=9  LEVEL=4  LIMIT=100   ANS1=-56    ANS2=5888
+        - make BRANCH=9  LEVEL=5  LIMIT=1000  ANS1=654    ANS2=51508
+        - make BRANCH=9  LEVEL=6  LIMIT=1000  ANS1=-629   ANS2=510854
+        - make BRANCH=9  LEVEL=7  LIMIT=1000  ANS1=654    ANS2=4867778
+        - make BRANCH=9  LEVEL=8  LIMIT=1000  ANS1=-649   ANS2=45697432
+    - name: "BRANCH=10"
       script:
         - cd alpha_beta_pruning
         - mkdir data
-        - make BRANCH=4 LEVEL=6 LIMIT=100
-        - make BRANCH=4 LEVEL=7 LIMIT=100
-        - make BRANCH=4 LEVEL=8 LIMIT=100
-        - make BRANCH=4 LEVEL=9 LIMIT=100
-        - make BRANCH=4 LEVEL=10 LIMIT=100
-    - name: "4, 11, 12, 1000"
+        - make BRANCH=10  LEVEL=2  LIMIT=100   ANS1=-63     ANS2=30
+        - make BRANCH=10  LEVEL=3  LIMIT=100   ANS1=73      ANS2=686
+        - make BRANCH=10  LEVEL=4  LIMIT=100   ANS1=-64     ANS2=8125
+        - make BRANCH=10  LEVEL=5  LIMIT=1000  ANS1=681     ANS2=87547
+        - make BRANCH=10  LEVEL=6  LIMIT=1000  ANS1=-659    ANS2=955004
+        - make BRANCH=10  LEVEL=7  LIMIT=1000  ANS1=673     ANS2=10258024
+    - name: "BRANCH=20"
       script:
         - cd alpha_beta_pruning
         - mkdir data
-        - make BRANCH=4 LEVEL=11 LIMIT=1000
-        - make BRANCH=4 LEVEL=12 LIMIT=1000
-    - name: "5, 2, 5, 50"
+        - make BRANCH=20  LEVEL=2  LIMIT=1000  ANS1=-776     ANS2=227
+        - make BRANCH=20  LEVEL=3  LIMIT=1000  ANS1=857      ANS2=6352
+        - make BRANCH=20  LEVEL=4  LIMIT=1000  ANS1=-765     ANS2=145354
+        - make BRANCH=20  LEVEL=5  LIMIT=1000  ANS1=806      ANS2=3227712
+    - name: "BRANCH=50"
       script:
         - cd alpha_beta_pruning
         - mkdir data
-        - make BRANCH=5 LEVEL=2 LIMIT=50
-        - make BRANCH=5 LEVEL=3 LIMIT=50
-        - make BRANCH=5 LEVEL=4 LIMIT=50
-        - make BRANCH=5 LEVEL=5 LIMIT=50
-    - name: "5, 6, 10, 500"
+        - make BRANCH=50  LEVEL=2  LIMIT=1000  ANS1=-791     ANS2=1771
+        - make BRANCH=50  LEVEL=3  LIMIT=1000  ANS1=909      ANS2=104807
+        - make BRANCH=50  LEVEL=4  LIMIT=1000  ANS1=-887     ANS2=5989427
+    - name: "BRANCH=100"
       script:
         - cd alpha_beta_pruning
         - mkdir data
-        - make BRANCH=5 LEVEL=6 LIMIT=500
-        - make BRANCH=5 LEVEL=7 LIMIT=500
-        - make BRANCH=5 LEVEL=8 LIMIT=500
-        - make BRANCH=5 LEVEL=9 LIMIT=500
-        - make BRANCH=5 LEVEL=10 LIMIT=500
-    - name: "6, 2, 5, 100"
-      script:
-        - cd alpha_beta_pruning
-        - mkdir data
-        - make BRANCH=6 LEVEL=2 LIMIT=100
-        - make BRANCH=6 LEVEL=3 LIMIT=100
-        - make BRANCH=6 LEVEL=4 LIMIT=100
-        - make BRANCH=6 LEVEL=5 LIMIT=100
-    - name: "6, 6, 9, 1000"
-      script:
-        - cd alpha_beta_pruning
-        - mkdir data
-        - make BRANCH=6 LEVEL=6 LIMIT=1000
-        - make BRANCH=6 LEVEL=7 LIMIT=1000
-        - make BRANCH=6 LEVEL=8 LIMIT=1000
-        - make BRANCH=6 LEVEL=9 LIMIT=1000
-    - name: "7, 2, 5, 100"
-      script:
-        - cd alpha_beta_pruning
-        - mkdir data
-        - make BRANCH=7 LEVEL=2 LIMIT=100
-        - make BRANCH=7 LEVEL=3 LIMIT=100
-        - make BRANCH=7 LEVEL=4 LIMIT=100
-        - make BRANCH=7 LEVEL=5 LIMIT=100
-    - name: "7, 6, 8, 1000"
-      script:
-        - cd alpha_beta_pruning
-        - mkdir data
-        - make BRANCH=7 LEVEL=6 LIMIT=1000
-        - make BRANCH=7 LEVEL=7 LIMIT=1000
-        - make BRANCH=7 LEVEL=8 LIMIT=1000
-    - name: "8, 2, 4, 100"
-      script:
-        - cd alpha_beta_pruning
-        - mkdir data
-        - make BRANCH=8 LEVEL=2 LIMIT=100
-        - make BRANCH=8 LEVEL=3 LIMIT=100
-        - make BRANCH=8 LEVEL=4 LIMIT=100
-    - name: "8, 5, 8, 1000"
-      script:
-        - cd alpha_beta_pruning
-        - mkdir data
-        - make BRANCH=8 LEVEL=5 LIMIT=1000
-        - make BRANCH=8 LEVEL=6 LIMIT=1000
-        - make BRANCH=8 LEVEL=7 LIMIT=1000
-        - make BRANCH=8 LEVEL=8 LIMIT=1000
-    - name: "9, 2, 4, 100"
-      script:
-        - cd alpha_beta_pruning
-        - mkdir data
-        - make BRANCH=9 LEVEL=2 LIMIT=100
-        - make BRANCH=9 LEVEL=3 LIMIT=100
-        - make BRANCH=9 LEVEL=4 LIMIT=100
-    - name: "9, 5, 8, 1000"
-      script:
-        - cd alpha_beta_pruning
-        - mkdir data
-        - make BRANCH=9 LEVEL=5 LIMIT=1000
-        - make BRANCH=9 LEVEL=6 LIMIT=1000
-        - make BRANCH=9 LEVEL=7 LIMIT=1000
-        - make BRANCH=9 LEVEL=8 LIMIT=1000
-    - name: "10, 2, 4, 100"
-      script:
-        - cd alpha_beta_pruning
-        - mkdir data
-        - make BRANCH=10 LEVEL=2 LIMIT=100
-        - make BRANCH=10 LEVEL=3 LIMIT=100
-        - make BRANCH=10 LEVEL=4 LIMIT=100
-    - name: "10, 5, 7, 1000"
-      script:
-        - cd alpha_beta_pruning
-        - mkdir data
-        - make BRANCH=10 LEVEL=5 LIMIT=1000
-        - make BRANCH=10 LEVEL=6 LIMIT=1000
-        - make BRANCH=10 LEVEL=7 LIMIT=1000
-    - name: "20, 2, 4, 1000"
-      script:
-        - cd alpha_beta_pruning
-        - mkdir data
-        - make BRANCH=20 LEVEL=2 LIMIT=1000
-        - make BRANCH=20 LEVEL=3 LIMIT=1000
-        - make BRANCH=20 LEVEL=4 LIMIT=1000
-    - name: "20, 5, 5, 1000"
-      script:
-        - cd alpha_beta_pruning
-        - mkdir data
-        - make BRANCH=20 LEVEL=5 LIMIT=1000
-    - name: "50, 2, 4, 1000"
-      script:
-        - cd alpha_beta_pruning
-        - mkdir data
-        - make BRANCH=50 LEVEL=2 LIMIT=1000
-        - make BRANCH=50 LEVEL=3 LIMIT=1000
-        - make BRANCH=50 LEVEL=4 LIMIT=1000
-    - name: "100, 2, 3, 1000"
-      script:
-        - cd alpha_beta_pruning
-        - mkdir data
-        - make BRANCH=100 LEVEL=2 LIMIT=1000
-        - make BRANCH=100 LEVEL=3 LIMIT=1000
+        - make BRANCH=100  LEVEL=2  LIMIT=1000  ANS1=-919    ANS2=7513
+        - make BRANCH=100  LEVEL=3  LIMIT=1000  ANS1=949     ANS2=923020
