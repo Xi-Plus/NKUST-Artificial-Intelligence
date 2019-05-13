@@ -112,6 +112,14 @@ int main(int argc, char* argv[]) {
 			printf("file input: %s\n", inputpath);
 		}
 	}
+	int answer_root = 2147483647;
+	if (argc >= 4) {
+		answer_root = atoi(argv[3]);
+	}
+	int answer_not_visited = -1;
+	if (argc >= 5) {
+		answer_not_visited = atoi(argv[4]);
+	}
 
 	fstream file;
 	file.open(inputpath, ios::in);
@@ -160,6 +168,13 @@ int main(int argc, char* argv[]) {
 		cout << "visit cnt: " << abp.visitcnt << endl;
 		cout << "not visit: " << abp.powsumlist[level + 1] - abp.visitcnt << endl;
 		printf("It tooks %d milliseconds\n", runtime);
+	}
+
+	if (answer_root != 2147483647) {
+		assert(answer_root == abp.arr[0]);
+	}
+	if (answer_not_visited != -1) {
+		assert(answer_not_visited == abp.powsumlist[level + 1] - abp.visitcnt);
 	}
 
 	return 0;

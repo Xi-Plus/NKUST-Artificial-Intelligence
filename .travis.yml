@@ -1,0 +1,162 @@
+language: cpp
+
+sudo: false
+
+compiler:
+  - g++
+
+jobs:
+  include:
+    - name: "2, 3, 10, 10"
+      script:
+        - make BRANCH=2 LEVEL=3 LIMIT=10
+        - make BRANCH=2 LEVEL=4 LIMIT=10
+        - make BRANCH=2 LEVEL=5 LIMIT=10
+        - make BRANCH=2 LEVEL=6 LIMIT=10
+        - make BRANCH=2 LEVEL=7 LIMIT=10
+        - make BRANCH=2 LEVEL=8 LIMIT=10
+        - make BRANCH=2 LEVEL=9 LIMIT=10
+        - make BRANCH=2 LEVEL=10 LIMIT=10
+    - name: "2, 11, 15, 50"
+      script:
+        - make BRANCH=2 LEVEL=11 LIMIT=50
+        - make BRANCH=2 LEVEL=12 LIMIT=50
+        - make BRANCH=2 LEVEL=13 LIMIT=50
+        - make BRANCH=2 LEVEL=14 LIMIT=50
+        - make BRANCH=2 LEVEL=15 LIMIT=50
+    - name: "2, 16, 20, 100"
+      script:
+        - make BRANCH=2 LEVEL=16 LIMIT=100
+        - make BRANCH=2 LEVEL=17 LIMIT=100
+        - make BRANCH=2 LEVEL=18 LIMIT=100
+        - make BRANCH=2 LEVEL=19 LIMIT=100
+        - make BRANCH=2 LEVEL=20 LIMIT=100
+    - name: "2, 21, 25, 1000"
+      script:
+        - make BRANCH=2 LEVEL=21 LIMIT=1000
+        - make BRANCH=2 LEVEL=22 LIMIT=1000
+        - make BRANCH=2 LEVEL=23 LIMIT=1000
+        - make BRANCH=2 LEVEL=24 LIMIT=1000
+        - make BRANCH=2 LEVEL=25 LIMIT=1000
+    - name: "3, 2, 5, 10"
+      script:
+        - make BRANCH=3 LEVEL=2 LIMIT=10
+        - make BRANCH=3 LEVEL=3 LIMIT=10
+        - make BRANCH=3 LEVEL=4 LIMIT=10
+        - make BRANCH=3 LEVEL=5 LIMIT=10
+    - name: "3, 6, 10, 100"
+      script:
+        - make BRANCH=3 LEVEL=6 LIMIT=100
+        - make BRANCH=3 LEVEL=7 LIMIT=100
+        - make BRANCH=3 LEVEL=8 LIMIT=100
+        - make BRANCH=3 LEVEL=9 LIMIT=100
+        - make BRANCH=3 LEVEL=10 LIMIT=100
+    - name: "3, 11, 15, 1000"
+      script:
+        - make BRANCH=3 LEVEL=11 LIMIT=1000
+        - make BRANCH=3 LEVEL=12 LIMIT=1000
+        - make BRANCH=3 LEVEL=13 LIMIT=1000
+        - make BRANCH=3 LEVEL=14 LIMIT=1000
+        - make BRANCH=3 LEVEL=15 LIMIT=1000
+    - name: "4, 2, 5, 50"
+      script:
+        - make BRANCH=4 LEVEL=2 LIMIT=50
+        - make BRANCH=4 LEVEL=3 LIMIT=50
+        - make BRANCH=4 LEVEL=4 LIMIT=50
+        - make BRANCH=4 LEVEL=5 LIMIT=50
+    - name: "4, 6, 10, 100"
+      script:
+        - make BRANCH=4 LEVEL=6 LIMIT=100
+        - make BRANCH=4 LEVEL=7 LIMIT=100
+        - make BRANCH=4 LEVEL=8 LIMIT=100
+        - make BRANCH=4 LEVEL=9 LIMIT=100
+        - make BRANCH=4 LEVEL=10 LIMIT=100
+    - name: "4, 11, 12, 1000"
+      script:
+        - make BRANCH=4 LEVEL=11 LIMIT=1000
+        - make BRANCH=4 LEVEL=12 LIMIT=1000
+    - name: "5, 2, 5, 50"
+      script:
+        - make BRANCH=5 LEVEL=2 LIMIT=50
+        - make BRANCH=5 LEVEL=3 LIMIT=50
+        - make BRANCH=5 LEVEL=4 LIMIT=50
+        - make BRANCH=5 LEVEL=5 LIMIT=50
+    - name: "5, 6, 10, 500"
+      script:
+        - make BRANCH=5 LEVEL=6 LIMIT=500
+        - make BRANCH=5 LEVEL=7 LIMIT=500
+        - make BRANCH=5 LEVEL=8 LIMIT=500
+        - make BRANCH=5 LEVEL=9 LIMIT=500
+        - make BRANCH=5 LEVEL=10 LIMIT=500
+    - name: "6, 2, 5, 100"
+      script:
+        - make BRANCH=6 LEVEL=2 LIMIT=100
+        - make BRANCH=6 LEVEL=3 LIMIT=100
+        - make BRANCH=6 LEVEL=4 LIMIT=100
+        - make BRANCH=6 LEVEL=5 LIMIT=100
+    - name: "6, 6, 9, 1000"
+      script:
+        - make BRANCH=6 LEVEL=6 LIMIT=1000
+        - make BRANCH=6 LEVEL=7 LIMIT=1000
+        - make BRANCH=6 LEVEL=8 LIMIT=1000
+        - make BRANCH=6 LEVEL=9 LIMIT=1000
+    - name: "7, 2, 5, 100"
+      script:
+        - make BRANCH=7 LEVEL=2 LIMIT=100
+        - make BRANCH=7 LEVEL=3 LIMIT=100
+        - make BRANCH=7 LEVEL=4 LIMIT=100
+        - make BRANCH=7 LEVEL=5 LIMIT=100
+    - name: "7, 6, 8, 1000"
+      script:
+        - make BRANCH=7 LEVEL=6 LIMIT=1000
+        - make BRANCH=7 LEVEL=7 LIMIT=1000
+        - make BRANCH=7 LEVEL=8 LIMIT=1000
+    - name: "8, 2, 4, 100"
+      script:
+        - make BRANCH=8 LEVEL=2 LIMIT=100
+        - make BRANCH=8 LEVEL=3 LIMIT=100
+        - make BRANCH=8 LEVEL=4 LIMIT=100
+    - name: "8, 5, 8, 1000"
+      script:
+        - make BRANCH=8 LEVEL=5 LIMIT=1000
+        - make BRANCH=8 LEVEL=6 LIMIT=1000
+        - make BRANCH=8 LEVEL=7 LIMIT=1000
+        - make BRANCH=8 LEVEL=8 LIMIT=1000
+    - name: "9, 2, 4, 100"
+      script:
+        - make BRANCH=9 LEVEL=2 LIMIT=100
+        - make BRANCH=9 LEVEL=3 LIMIT=100
+        - make BRANCH=9 LEVEL=4 LIMIT=100
+    - name: "9, 5, 8, 1000"
+      script:
+        - make BRANCH=9 LEVEL=5 LIMIT=1000
+        - make BRANCH=9 LEVEL=6 LIMIT=1000
+        - make BRANCH=9 LEVEL=7 LIMIT=1000
+        - make BRANCH=9 LEVEL=8 LIMIT=1000
+    - name: "10, 2, 4, 100"
+      script:
+        - make BRANCH=10 LEVEL=2 LIMIT=100
+        - make BRANCH=10 LEVEL=3 LIMIT=100
+        - make BRANCH=10 LEVEL=4 LIMIT=100
+    - name: "10, 5, 7, 1000"
+      script:
+        - make BRANCH=10 LEVEL=5 LIMIT=1000
+        - make BRANCH=10 LEVEL=6 LIMIT=1000
+        - make BRANCH=10 LEVEL=7 LIMIT=1000
+    - name: "20, 2, 4, 1000"
+      script:
+        - make BRANCH=20 LEVEL=2 LIMIT=1000
+        - make BRANCH=20 LEVEL=3 LIMIT=1000
+        - make BRANCH=20 LEVEL=4 LIMIT=1000
+    - name: "20, 5, 5, 1000"
+      script:
+        - make BRANCH=20 LEVEL=5 LIMIT=1000
+    - name: "50, 2, 4, 1000"
+      script:
+        - make BRANCH=50 LEVEL=2 LIMIT=1000
+        - make BRANCH=50 LEVEL=3 LIMIT=1000
+        - make BRANCH=50 LEVEL=4 LIMIT=1000
+    - name: "100, 2, 3, 1000"
+      script:
+        - make BRANCH=100 LEVEL=2 LIMIT=1000
+        - make BRANCH=100 LEVEL=3 LIMIT=1000
