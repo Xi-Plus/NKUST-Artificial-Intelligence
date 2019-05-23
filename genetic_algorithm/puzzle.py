@@ -33,14 +33,12 @@ class Puzzle:
                 pick = random.randint(0, self.population - 1)
                 row = random.randint(0, self.board_size - 1)
                 value = random.randint(0, self.board_size - 1)
-                all_boards[pick][row] = value
+                new_boards[pick][row] = value
             # selection
             all_boards = self.select(new_boards)
             print(step, all_boards[0], self.calc_conflict(all_boards[0]))
             if self.calc_conflict(all_boards[0]) == 0:
                 break
-            if step > 50:
-                exit('No answer')
         return all_boards[0], step
 
     def select(self, new_boards):
