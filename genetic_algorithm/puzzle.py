@@ -39,7 +39,7 @@ class Puzzle:
             print(step, all_boards[0], self.calc_conflict(all_boards[0]))
             if self.calc_conflict(all_boards[0]) == 0:
                 break
-            if step > 1000:
+            if step > 50:
                 exit('No answer')
         return all_boards[0], step
 
