@@ -9,21 +9,23 @@ compiler:
 
 jobs:
   include:
-    - name: "100 250 30"
+    - name: "bs 8 p 100 c 250 m 30"
       script:
         - cd genetic_algorithm
         - mkdir data
-        - python puzzle.py --p 100 --c 250 --m 30
-        - python puzzle.py --p 100 --c 250 --m 30
-        - python puzzle.py --p 100 --c 250 --m 30
-        - python puzzle.py --p 100 --c 250 --m 30
-        - python puzzle.py --p 100 --c 250 --m 30
-    - name: "10 20 5"
+        - for i in `seq 10`; do python puzzle.py 8 --p 100 --c 250 --m 30 && echo -------------; done
+    - name: "bs 8 p 10 c 20 m 5"
       script:
         - cd genetic_algorithm
         - mkdir data
-        - python puzzle.py --p 10 --c 20 --m 5
-        - python puzzle.py --p 10 --c 20 --m 5
-        - python puzzle.py --p 10 --c 20 --m 5
-        - python puzzle.py --p 10 --c 20 --m 5
-        - python puzzle.py --p 10 --c 20 --m 5
+        - for i in `seq 10`; do python3 puzzle.py --p 10 --c 20 --m 5 && echo -------------; done
+    - name: "bs 16 p 100 c 250 m 30"
+      script:
+        - cd genetic_algorithm
+        - mkdir data
+        - for i in `seq 10`; do python puzzle.py 16 --p 100 --c 250 --m 30 && echo -------------; done
+    - name: "bs 16 p 10 c 20 m 5"
+      script:
+        - cd genetic_algorithm
+        - mkdir data
+        - for i in `seq 10`; do python3 puzzle.py 16 --p 10 --c 20 --m 5 && echo -------------; done
