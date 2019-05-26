@@ -49,6 +49,10 @@ class Puzzle:
 
         step = 0
         while True:
+            for board in all_boards:
+                if board.conflict == 0:
+                    return board, step
+
             step += 1
             new_boards = []
             # crossover
@@ -69,9 +73,6 @@ class Puzzle:
                 new_boards[pick].board[row] = value
                 new_boards[pick].renew_conflict()
             all_boards = new_boards
-            for board in all_boards:
-                if board.conflict == 0:
-                    return board, step
 
     def do_crossover(self, board1, board2):
         switch_cnt = random.randint(1, self.board_size - 1)
