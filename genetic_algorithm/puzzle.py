@@ -34,10 +34,9 @@ class Board:
 class Puzzle:
     board = None
 
-    def __init__(self, board_size, population, crossover, mutation):
+    def __init__(self, board_size, population, mutation):
         self.board_size = board_size
         self.population = population  # population size
-        self.crossover = crossover  # probability of performing crossover
         self.mutation = mutation  # probability of mutation
 
     def run(self):
@@ -50,11 +49,14 @@ class Puzzle:
             step += 1
             new_boards = []
             # crossover
-            for i in range(self.crossover):
+            ticket_pool = []
+            for i in range(self.population):
+                ticket_pool.extend([i] * int(50 / all_boards[i].conflict))
+            for i in range(self.population):
                 pick1 = pick2 = 0
                 while pick1 == pick2:
-                    pick1 = random.randint(0, self.population - 1)
-                    pick2 = random.randint(0, self.population - 1)
+                    pick1 = ticket_pool[random.randint(0, len(ticket_pool) - 1)]
+                    pick2 = ticket_pool[random.randint(0, len(ticket_pool) - 1)]
                 new_boards.append(Board(self.do_crossover(all_boards[pick1], all_boards[pick2])))
             # mutation
             for i in range(self.mutation):
@@ -62,20 +64,10 @@ class Puzzle:
                 row = random.randint(0, self.board_size - 1)
                 value = random.randint(0, self.board_size - 1)
                 new_boards[pick].board[row] = value
-            # selection
-            all_boards = self.select(new_boards)
-            # print(step, all_boards[0], self.calc_conflict(all_boards[0]))
-            if all_boards[0].conflict == 0:
-                break
-        return all_boards[0], step
-
-    def select(self, new_boards):
-        temp_boards = [
-            (new_boards[i].conflict, new_boards[i])
-            for i in range(self.crossover)
-        ]
-        temp_boards.sort(key=lambda v: v[0])
-        return [temp_boards[i][1] for i in range(self.population)]
+            all_boards = new_boards
+            for board in all_boards:
+                if board.conflict == 0:
+                    return board, step
 
     def do_crossover(self, board1, board2):
         switch_cnt = random.randint(1, self.board_size - 1)
@@ -90,7 +82,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('size', type=int, nargs='?', default=8)
     parser.add_argument('--population', type=int, default=100)
-    parser.add_argument('--crossover', type=int, default=200)
     parser.add_argument('--mutation', type=int, default=20)
     parser.add_argument('--run', type=int, default=1)
     args = parser.parse_args()
@@ -98,7 +89,7 @@ if __name__ == "__main__":
 
     start = time.time()
 
-    puzzle = Puzzle(args.size, args.population, args.crossover, args.mutation)
+    puzzle = Puzzle(args.size, args.population, args.mutation)
     if args.run <= 1:
         board, step = puzzle.run()
         print('Time {:.4f} s. Step {}.'.format(time.time() - start, step))
