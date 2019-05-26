@@ -36,7 +36,7 @@ class Puzzle:
                 new_boards[pick][row] = value
             # selection
             all_boards = self.select(new_boards)
-            print(step, all_boards[0], self.calc_conflict(all_boards[0]))
+            # print(step, all_boards[0], self.calc_conflict(all_boards[0]))
             if self.calc_conflict(all_boards[0]) == 0:
                 break
         return all_boards[0], step
@@ -92,6 +92,5 @@ if __name__ == "__main__":
 
     puzzle = Puzzle(args.size, args.population, args.crossover, args.mutation)
     board, step = puzzle.run()
-    print('Time {0:.4f} s'.format(time.time() - start))
-    print('Step {}'.format(step))
-    puzzle.show_board(board)
+    print('Time {:.4f} s. Step {}.'.format(time.time() - start, step))
+    # puzzle.show_board(board)
