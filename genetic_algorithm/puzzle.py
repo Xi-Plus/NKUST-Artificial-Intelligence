@@ -35,7 +35,7 @@ class Board:
 
 
 class Puzzle:
-    board = None
+    score = 50
 
     def __init__(self, board_size, population, mutation):
         self.board_size = board_size
@@ -54,7 +54,7 @@ class Puzzle:
             # crossover
             ticket_pool = []
             for i in range(self.population):
-                ticket_pool.extend([i] * int(50 / all_boards[i].conflict))
+                ticket_pool.extend([i] * int(self.score / all_boards[i].conflict))
             for i in range(self.population):
                 pick1 = pick2 = 0
                 while pick1 == pick2:
@@ -87,6 +87,7 @@ if __name__ == "__main__":
     parser.add_argument('size', type=int, nargs='?', default=8)
     parser.add_argument('--population', type=int, default=100)
     parser.add_argument('--mutation', type=int, default=20)
+    parser.add_argument('--score', type=int, default=50)
     parser.add_argument('--run', type=int, default=1)
     args = parser.parse_args()
     print(args)
@@ -94,6 +95,7 @@ if __name__ == "__main__":
     start = time.time()
 
     puzzle = Puzzle(args.size, args.population, args.mutation)
+    puzzle.score = args.score
     if args.run <= 1:
         board, step = puzzle.run()
         print('Time {:.4f} s. Step {}.'.format(time.time() - start, step))
