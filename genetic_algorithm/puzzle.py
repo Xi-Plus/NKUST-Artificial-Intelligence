@@ -9,6 +9,9 @@ class Board:
         self.board_size = len(board)
         self.conflict = self.calc_conflict(board)
 
+    def renew_conflict(self):
+        self.conflict = self.calc_conflict(self.board)
+
     def calc_conflict(self, board):
         cnt = 0
         for i in range(self.board_size):
@@ -64,6 +67,7 @@ class Puzzle:
                 row = random.randint(0, self.board_size - 1)
                 value = random.randint(0, self.board_size - 1)
                 new_boards[pick].board[row] = value
+                new_boards[pick].renew_conflict()
             all_boards = new_boards
             for board in all_boards:
                 if board.conflict == 0:
