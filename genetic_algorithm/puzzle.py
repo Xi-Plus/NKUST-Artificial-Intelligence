@@ -85,12 +85,21 @@ if __name__ == "__main__":
     parser.add_argument('--population', type=int, default=100)
     parser.add_argument('--crossover', type=int, default=200)
     parser.add_argument('--mutation', type=int, default=20)
+    parser.add_argument('--run', type=int, default=1)
     args = parser.parse_args()
     print(args)
 
     start = time.time()
 
     puzzle = Puzzle(args.size, args.population, args.crossover, args.mutation)
-    board, step = puzzle.run()
-    print('Time {:.4f} s. Step {}.'.format(time.time() - start, step))
+    if args.run <= 1:
+        board, step = puzzle.run()
+        print('Time {:.4f} s. Step {}.'.format(time.time() - start, step))
+    else:
+        sum_step = 0
+        for i in range(1, args.run + 1):
+            board, step = puzzle.run()
+            sum_step += step
+            print('Run {}. Step {}. Avg time {:.4f} s. Avg step {:.2f}. Total time {:.4f} s.'.format(
+                i, step, (time.time() - start) / i, sum_step / i, time.time() - start))
     # puzzle.show_board(board)
