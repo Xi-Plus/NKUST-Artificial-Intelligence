@@ -9,23 +9,23 @@ compiler:
 
 jobs:
   include:
-    - name: "bs 8 p 100 m 30"
-      script:
-        - cd genetic_algorithm
-        - mkdir data
-        - python puzzle.py 8 --p 100 --m 30 --run 10
     - name: "bs 8 p 10 m 5"
       script:
         - cd genetic_algorithm
         - mkdir data
         - python3 puzzle.py --p 10 --m 5 --run 10
-    - name: "bs 16 p 100 m 30"
+    - name: "bs 8 p 100 m 30"
       script:
         - cd genetic_algorithm
         - mkdir data
-        - python puzzle.py 16 --p 100 --m 30 --run 10
+        - python puzzle.py 8 --p 100 --m 30 --run 10
     - name: "bs 16 p 10 m 5"
       script:
         - cd genetic_algorithm
         - mkdir data
         - python3 puzzle.py 16 --p 10 --m 5 --run 10
+    - name: "bs 16 p 100 m 30"
+      script:
+        - cd genetic_algorithm
+        - mkdir data
+        - python puzzle.py 16 --p 100 --m 30 --run 10
