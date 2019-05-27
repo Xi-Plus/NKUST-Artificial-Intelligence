@@ -12,20 +12,16 @@ jobs:
     - name: "bs 8 p 10 m 0.5"
       script:
         - cd genetic_algorithm
-        - mkdir data
         - python3 puzzle.py --p 10 --m 0.5 --run 10
     - name: "bs 8 p 100 m 0.3"
       script:
         - cd genetic_algorithm
-        - mkdir data
         - python3 puzzle.py 8 --p 100 --m 0.3 --run 10
     - name: "bs 8 p 1000 m 0.2"
       script:
         - cd genetic_algorithm
-        - mkdir data
         - python3 puzzle.py 8 --p 1000 --m 0.2 --run 10
     - name: "bs 16 p 100 m 0.3"
       script:
         - cd genetic_algorithm
-        - mkdir data
         - python3 puzzle.py 16 --p 100 --m 0.3 --run 10
