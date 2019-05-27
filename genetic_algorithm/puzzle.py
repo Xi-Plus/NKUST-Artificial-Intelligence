@@ -64,14 +64,18 @@ class Puzzle:
                 while pick1 == pick2:
                     pick1 = ticket_pool[random.randint(0, len(ticket_pool) - 1)]
                     pick2 = ticket_pool[random.randint(0, len(ticket_pool) - 1)]
-                new_boards.append(Board(self.do_crossover(all_boards[pick1], all_boards[pick2])))
-            # mutation
-            for i in range(self.mutation):
-                pick = random.randint(0, self.population - 1)
-                row = random.randint(0, self.board_size - 1)
-                value = random.randint(0, self.board_size - 1)
-                new_boards[pick].board[row] = value
-                new_boards[pick].renew_conflict()
+                new_board = Board(self.do_crossover(all_boards[pick1], all_boards[pick2]))
+
+                # mutation
+                if random.random() > self.mutation:
+                    pick = random.randint(0, self.population - 1)
+                    row = random.randint(0, self.board_size - 1)
+                    value = random.randint(0, self.board_size - 1)
+                    new_board.board[row] = value
+                    new_board.renew_conflict()
+
+                new_boards.append(new_board)
+
             all_boards = new_boards
 
     def do_crossover(self, board1, board2):
@@ -87,7 +91,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('size', type=int, nargs='?', default=8)
     parser.add_argument('--population', type=int, default=100)
-    parser.add_argument('--mutation', type=int, default=20)
+    parser.add_argument('--mutation', type=float, default=0.2)
     parser.add_argument('--score', type=int, default=50)
     parser.add_argument('--run', type=int, default=1)
     args = parser.parse_args()
