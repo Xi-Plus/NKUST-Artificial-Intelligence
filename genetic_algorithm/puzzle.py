@@ -86,6 +86,12 @@ class Puzzle:
             new_board[i] = board2.board[i]
         return new_board
 
+    def calc_diversity(self, all_boards):
+        temp = set()
+        for board in all_boards:
+            temp.add(tuple(board.board))
+        return len(temp) / len(all_boards)
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
