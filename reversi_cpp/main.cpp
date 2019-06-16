@@ -2,6 +2,7 @@
 using namespace std;
 
 #define BOARD_SIZE 8
+#define CHESS_EMPTY 0
 #define CHESS_BLACK 1
 #define CHESS_WHITE 2
 #define CHESS_WALL 3
@@ -12,6 +13,7 @@ using namespace std;
 const string ICON[] = {ICON_EMPTY, ICON_BLACK, ICON_WHITE, ICON_WALL};
 int c2n[255] = {};
 char n2c[BOARD_SIZE + 1];
+typedef vector<pair<int, int>> CAN_LAY_LIST;
 
 struct Board {
 	int board[BOARD_SIZE + 2][BOARD_SIZE + 2] = {};
@@ -87,6 +89,19 @@ inline void do_lay(Board *board, int color, int c, int n) {
 	board->board[n][c] = color;
 }
 
+CAN_LAY_LIST list_can_lay(Board *board, int color) {
+	CAN_LAY_LIST result;
+	for (int n = 1; n <= BOARD_SIZE; n++) {
+		for (int c = 1; c <= BOARD_SIZE; c++) {
+			if (board->board[n][c] != CHESS_EMPTY) continue;
+			if (check_can_lay(board, color, c, n)) {
+				result.push_back(make_pair(c, n));
+			}
+		}
+	}
+	return result;
+}
+
 void check_next(Board *board) {
 }
 
@@ -124,10 +139,17 @@ int main() {
 	}
 
 	while (true) {
+	my_turn:
 		// AI turn
 		check_next(board);
 		turn = other_color(turn);
 	other_turn:
+		CAN_LAY_LIST can_lay = list_can_lay(board, turn);
+		if (can_lay.size() == 0) {
+			cout << "No can lay" << endl;
+			goto my_turn;
+		}
+		// cout << can_lay.size() << " can lay" << endl;
 		while (true) {
 			cout << "Input other (" << ICON[turn] << ") lay: ";
 			getline(cin, s);
