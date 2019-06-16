@@ -122,7 +122,6 @@ const int POINT_SCORE[8][8] = {{100, -10, 8, 6, 6, 8, -10, 100},
 							   {100, -10, 8, 6, 6, 8, -10, 100}};
 int clac_score_point(Board *board, int color) {
 	int scoreMy = 0, scoreOther = 0;
-	int point_score = 0;
 	int other = other_color(color);
 	for (int n = 1; n <= BOARD_SIZE; n++) {
 		for (int c = 1; c <= BOARD_SIZE; c++) {
@@ -133,7 +132,7 @@ int clac_score_point(Board *board, int color) {
 			}
 		}
 	}
-	return 100 * (scoreMy - scoreOther) / (scoreMy + scoreOther + 1);
+	return scoreMy - scoreOther;
 }
 
 // https://zh.wikipedia.org/wiki/行動力_(黑白棋)
