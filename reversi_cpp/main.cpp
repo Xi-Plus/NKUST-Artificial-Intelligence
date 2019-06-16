@@ -10,10 +10,13 @@ using namespace std;
 #define ICON_WHITE "O"
 #define ICON_EMPTY " "
 #define ICON_WALL "#"
+#define DFS_LIMIT 5
+
 const string ICON[] = {ICON_EMPTY, ICON_BLACK, ICON_WHITE, ICON_WALL};
 int c2n[255] = {};
 char n2c[BOARD_SIZE + 1];
 typedef vector<pair<int, int>> CAN_LAY_LIST;
+stack<int> score_list;
 
 struct Board {
 	int board[BOARD_SIZE + 2][BOARD_SIZE + 2] = {};
@@ -78,14 +81,14 @@ void do_eat(Board *board, int color, int c, int n, int dc, int dn) {
 }
 
 inline void do_lay(Board *board, int color, int c, int n) {
-	do_eat(board, color, c, n, 1, 1);
-	do_eat(board, color, c, n, 1, -1);
-	do_eat(board, color, c, n, -1, 1);
-	do_eat(board, color, c, n, -1, -1);
-	do_eat(board, color, c, n, 1, 0);
-	do_eat(board, color, c, n, -1, 0);
-	do_eat(board, color, c, n, 0, 1);
-	do_eat(board, color, c, n, 0, -1);
+	if (check_can_eat(board, color, c, n, 1, 1)) do_eat(board, color, c, n, 1, 1);
+	if (check_can_eat(board, color, c, n, 1, -1)) do_eat(board, color, c, n, 1, -1);
+	if (check_can_eat(board, color, c, n, -1, 1)) do_eat(board, color, c, n, -1, 1);
+	if (check_can_eat(board, color, c, n, -1, -1)) do_eat(board, color, c, n, -1, -1);
+	if (check_can_eat(board, color, c, n, 1, 0)) do_eat(board, color, c, n, 1, 0);
+	if (check_can_eat(board, color, c, n, -1, 0)) do_eat(board, color, c, n, -1, 0);
+	if (check_can_eat(board, color, c, n, 0, 1)) do_eat(board, color, c, n, 0, 1);
+	if (check_can_eat(board, color, c, n, 0, -1)) do_eat(board, color, c, n, 0, -1);
 	board->board[n][c] = color;
 }
 
@@ -102,7 +105,93 @@ CAN_LAY_LIST list_can_lay(Board *board, int color) {
 	return result;
 }
 
-void check_next(Board *board) {
+int calc_score(Board *board, int color) {
+	int score = 0;
+	int other = other_color(color);
+	for (int n = 1; n <= BOARD_SIZE; n++) {
+		for (int c = 1; c <= BOARD_SIZE; c++) {
+			if (board->board[n][c] == color) {
+				score++;
+			} else if (board->board[n][c] == other) {
+				score--;
+			}
+		}
+	}
+	return score;
+}
+
+int dfs_score(Board *board, int color, int now_color, int limit) {
+	if (limit == 1) {
+		int score = calc_score(board, color);
+		return score;
+	}
+	CAN_LAY_LIST can_lay = list_can_lay(board, color);
+	if (can_lay.size() == 0) {
+		int score = calc_score(board, color);
+		return score;
+	}
+	int score;
+	int other = other_color(now_color);
+	if (color == now_color) {
+		score = INT_MIN;
+	} else {
+		score = INT_MAX;
+	}
+	if (color == now_color) {
+		// MAX
+		for (auto lay : can_lay) {
+			if (score >= score_list.top()) {
+				continue;
+			}
+			Board *new_board = new Board();
+			do_lay(new_board, now_color, lay.first, lay.second);
+			score_list.push(score);
+			score = max(score, dfs_score(new_board, color, other, limit - 1));
+			score_list.pop();
+		}
+	} else {
+		// MIN
+		for (auto lay : can_lay) {
+			if (score >= score_list.top()) {
+				continue;
+			}
+			Board *new_board = new Board();
+			do_lay(new_board, now_color, lay.first, lay.second);
+			score_list.push(score);
+			score = max(score, dfs_score(new_board, color, other, limit - 1));
+			score_list.pop();
+		}
+	}
+	return score;
+}
+
+void check_next(Board *board, int color) {
+	CAN_LAY_LIST can_lay = list_can_lay(board, color);
+	if (can_lay.size() == 0) {
+		cout << "No can lay" << endl;
+	}
+	cout << can_lay.size() << " position to lay: ";
+	for (auto v : can_lay) {
+		cout << n2c[v.first] << v.second << " ";
+	}
+	cout << endl;
+
+	int best_score = -1e8, score;
+	pair<int, int> lay;
+	Board *new_board = new Board();
+	for (auto v : can_lay) {
+		memcpy(new_board, board, sizeof(board));
+		do_lay(new_board, color, v.first, v.second);
+		score_list.push(INT_MAX);
+		score = dfs_score(new_board, color, other_color(color), DFS_LIMIT);
+		score_list.pop();
+		if (score > best_score) {
+			lay = v;
+		}
+	}
+	cout << "lay " << n2c[lay.first] << lay.second << " score " << best_score << endl;
+	do_lay(board, color, lay.first, lay.second);
+	show_board(board);
 }
 
 int main() {
@@ -141,10 +230,14 @@ int main() {
 	while (true) {
 	my_turn:
 		// AI turn
-		check_next(board);
+		cout << "-------------------------------" << endl;
+		cout << "AI (" << ICON[turn] << ") turn" << endl;
+		check_next(board, turn);
 		turn = other_color(turn);
 	other_turn:
 		CAN_LAY_LIST can_lay = list_can_lay(board, turn);
+		cout << "-------------------------------" << endl;
+		cout << "Player (" << ICON[turn] << ") turn" << endl;
 		if (can_lay.size() == 0) {
 			cout << "No can lay" << endl;
 			goto my_turn;
@@ -155,7 +248,7 @@ int main() {
 		}
 		cout << endl;
 		while (true) {
-			cout << "Input other (" << ICON[turn] << ") lay: ";
+			cout << "Input player lay: ";
 			getline(cin, s);
 			if (s.size() != 2) continue;
 			if (('A' <= s[0] && s[0] <= 'Z') || ('a' <= s[0] && s[0] <= 'z')) {
