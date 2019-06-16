@@ -149,7 +149,11 @@ int main() {
 			cout << "No can lay" << endl;
 			goto my_turn;
 		}
-		// cout << can_lay.size() << " can lay" << endl;
+		cout << can_lay.size() << " position to lay: ";
+		for (auto v : can_lay) {
+			cout << n2c[v.first] << v.second << " ";
+		}
+		cout << endl;
 		while (true) {
 			cout << "Input other (" << ICON[turn] << ") lay: ";
 			getline(cin, s);
