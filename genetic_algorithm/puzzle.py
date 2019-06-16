@@ -30,7 +30,7 @@ class Board:
                 if self.board[i] == j:
                     print('O', end='')
                 else:
-                    print('_', end='')
+                    print('.', end='')
             print()
 
 
