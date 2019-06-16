@@ -269,6 +269,7 @@ int main() {
 		cout << "Player (" << ICON[turn] << ") turn" << endl;
 		if (can_lay.size() == 0) {
 			cout << "No can lay" << endl;
+			turn = other_color(turn);
 			goto my_turn;
 		}
 		cout << can_lay.size() << " position to lay: ";
