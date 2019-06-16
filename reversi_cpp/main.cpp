@@ -111,19 +111,31 @@ CAN_LAY_LIST list_can_lay(Board *board, int color) {
 	return result;
 }
 
+const int POINT_SCORE[8][8] = {{100, -10, 8, 6, 6, 8, -10, 100},
+							   {-10, -25, -4, -4, -4, -4, -25, -10},
+							   {8, -4, 6, 4, 4, 6, -4, 8},
+							   {6, -4, 4, 0, 0, 4, -4, 6},
+							   {6, -4, 4, 0, 0, 4, -4, 6},
+							   {8, -4, 6, 4, 4, 6, -4, 8},
+							   {-10, -25, -4, -4, -4, -4, -25, -10},
+							   {100, -10, 8, 6, 6, 8, -10, 100}};
+
 int calc_score(Board *board, int color) {
-	int score = 0;
+	int cntMy = 0, cntOther = 0;
+	int point_score = 0;
 	int other = other_color(color);
 	for (int n = 1; n <= BOARD_SIZE; n++) {
 		for (int c = 1; c <= BOARD_SIZE; c++) {
 			if (board->board[n][c] == color) {
-				score++;
+				cntMy++;
+				point_score += POINT_SCORE[n - 1][c - 1];
 			} else if (board->board[n][c] == other) {
-				score--;
+				cntOther++;
+				point_score -= POINT_SCORE[n - 1][c - 1];
 			}
 		}
 	}
-	return score;
+	return (cntMy - cntOther) * 2 + point_score;
 }
 
 int dfs_score(Board *board, int color, int now_color, int limit) {
