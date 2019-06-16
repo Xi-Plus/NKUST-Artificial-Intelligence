@@ -10,7 +10,7 @@ using namespace std;
 #define ICON_WHITE "O"
 #define ICON_EMPTY " "
 #define ICON_WALL "#"
-#define DFS_LIMIT 5
+#define DFS_LIMIT 7
 
 const string ICON[] = {ICON_EMPTY, ICON_BLACK, ICON_WHITE, ICON_WALL};
 int c2n[255] = {};
@@ -121,46 +121,54 @@ int calc_score(Board *board, int color) {
 }
 
 int dfs_score(Board *board, int color, int now_color, int limit) {
+	// cout << "dfs_score " << color << " " << now_color << " " << limit << endl;
+	// show_board(board);
 	if (limit == 1) {
 		int score = calc_score(board, color);
+		// cout << "A limit " << limit << " color " << color << "/" << now_color << " result " << score << endl;
 		return score;
 	}
-	CAN_LAY_LIST can_lay = list_can_lay(board, color);
+	CAN_LAY_LIST can_lay = list_can_lay(board, now_color);
+	// cout << can_lay.size() << " can lay" << endl;
 	if (can_lay.size() == 0) {
 		int score = calc_score(board, color);
+		// cout << "B limit " << limit << " color " << color << "/" << now_color << " result " << score << endl;
 		return score;
 	}
 	int score;
 	int other = other_color(now_color);
 	if (color == now_color) {
-		score = INT_MIN;
-	} else {
-		score = INT_MAX;
-	}
-	if (color == now_color) {
 		// MAX
+		score = INT_MIN;
 		for (auto lay : can_lay) {
-			if (score >= score_list.top()) {
+			if (score >= score_list.top() && score != INT_MIN && score != INT_MAX) {
+				// cout << "A Skip " << limit << " " << score << " " << score_list.top() << " " << score_list.size() << endl;
 				continue;
 			}
 			Board *new_board = new Board();
+			memcpy(new_board, board, sizeof(*board));
 			do_lay(new_board, now_color, lay.first, lay.second);
 			score_list.push(score);
 			score = max(score, dfs_score(new_board, color, other, limit - 1));
 			score_list.pop();
 		}
+		// cout << "C limit " << limit << " color " << color << "/" << now_color << " result " << score << endl;
 	} else {
 		// MIN
+		score = INT_MAX;
 		for (auto lay : can_lay) {
-			if (score >= score_list.top()) {
+			if (score >= score_list.top() && score != INT_MAX && score != INT_MIN) {
+				// cout << "B Skip " << limit << " " << score << " " << score_list.top() << " " << score_list.size() << endl;
 				continue;
 			}
 			Board *new_board = new Board();
+			memcpy(new_board, board, sizeof(*board));
 			do_lay(new_board, now_color, lay.first, lay.second);
 			score_list.push(score);
-			score = max(score, dfs_score(new_board, color, other, limit - 1));
+			score = min(score, dfs_score(new_board, color, other, limit - 1));
 			score_list.pop();
 		}
+		// cout << "D limit " << limit << " color " << color << "/" << now_color << " result " << score << endl;
 	}
 	return score;
 }
@@ -169,6 +177,7 @@ void check_next(Board *board, int color) {
 	CAN_LAY_LIST can_lay = list_can_lay(board, color);
 	if (can_lay.size() == 0) {
 		cout << "No can lay" << endl;
+		return;
 	}
 	cout << can_lay.size() << " position to lay: ";
 	for (auto v : can_lay) {
@@ -176,17 +185,19 @@ void check_next(Board *board, int color) {
 	}
 	cout << endl;
 
-	int best_score = -1e8, score;
+	int best_score = INT_MIN, score;
 	pair<int, int> lay;
 	Board *new_board = new Board();
 	for (auto v : can_lay) {
-		memcpy(new_board, board, sizeof(board));
+		memcpy(new_board, board, sizeof(*board));
 		do_lay(new_board, color, v.first, v.second);
+		assert(score_list.size() == 0);
 		score_list.push(INT_MAX);
 		score = dfs_score(new_board, color, other_color(color), DFS_LIMIT);
 		score_list.pop();
 		if (score > best_score) {
 			lay = v;
+			best_score = score;
 		}
 	}
 	cout << "lay " << n2c[lay.first] << lay.second << " score " << best_score << endl;
