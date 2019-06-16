@@ -27,6 +27,7 @@ inline int other_color(int color) {
 }
 
 void show_board(Board *b) {
+	int cntB = 0, cntW = 0;
 	cout << ICON_WALL << " ";
 	for (int w = 0; w < BOARD_SIZE; w++) {
 		cout << (char)('A' + w) << " ";
@@ -36,6 +37,10 @@ void show_board(Board *b) {
 		cout << q << " ";
 		for (int w = 1; w < BOARD_SIZE + 1; w++) {
 			cout << ICON[b->board[q][w]] << " ";
+			if (b->board[q][w] == CHESS_BLACK)
+				cntB++;
+			else if (b->board[q][w] == CHESS_WHITE)
+				cntW++;
 		}
 		cout << q << " " << endl;
 	}
@@ -44,6 +49,7 @@ void show_board(Board *b) {
 		cout << (char)('A' + w) << " ";
 	}
 	cout << ICON_WALL << endl;
+	cout << ICON_BLACK << ": " << cntB << " " << ICON_WHITE << ": " << cntW << endl;
 }
 
 bool check_can_eat(Board *board, int color, int c, int n, int dc, int dn) {
