@@ -119,23 +119,50 @@ const int POINT_SCORE[8][8] = {{100, -10, 8, 6, 6, 8, -10, 100},
 							   {8, -4, 6, 4, 4, 6, -4, 8},
 							   {-10, -25, -4, -4, -4, -4, -25, -10},
 							   {100, -10, 8, 6, 6, 8, -10, 100}};
-
-int calc_score(Board *board, int color) {
-	int cntMy = 0, cntOther = 0;
+int clac_score_point(Board *board, int color) {
+	int scoreMy = 0, scoreOther = 0;
 	int point_score = 0;
 	int other = other_color(color);
 	for (int n = 1; n <= BOARD_SIZE; n++) {
 		for (int c = 1; c <= BOARD_SIZE; c++) {
 			if (board->board[n][c] == color) {
-				cntMy++;
-				point_score += POINT_SCORE[n - 1][c - 1];
+				scoreMy += POINT_SCORE[n - 1][c - 1];
 			} else if (board->board[n][c] == other) {
-				cntOther++;
-				point_score -= POINT_SCORE[n - 1][c - 1];
+				scoreOther += POINT_SCORE[n - 1][c - 1];
 			}
 		}
 	}
-	return (cntMy - cntOther) * 2 + point_score;
+	return scoreMy - scoreOther;
+}
+
+// https://zh.wikipedia.org/wiki/%E8%A1%8C%E5%8B%95%E5%8A%9B_(%E9%BB%91%E7%99%BD%E6%A3%8B)
+int calc_score_mobility(Board *board, int color) {
+	int moveMy = list_can_lay(board, color).size();
+	int moveOther = list_can_lay(board, other_color(color)).size();
+	return 100 * (moveMy - moveOther) / (moveMy + moveOther);
+}
+
+int calc_score_chess(Board *board, int color) {
+	int cntMy = 0, cntOther = 0;
+	int other = other_color(color);
+	for (int n = 1; n <= BOARD_SIZE; n++) {
+		for (int c = 1; c <= BOARD_SIZE; c++) {
+			if (board->board[n][c] == color) {
+				cntMy++;
+			} else if (board->board[n][c] == other) {
+				cntOther++;
+			}
+		}
+	}
+	return 100 * (cntMy - cntOther) * (cntMy + cntOther);
+}
+
+int calc_score(Board *board, int color) {
+	int score = 0;
+	score += clac_score_point(board, color) * 10;
+	score += calc_score_mobility(board, color) * 8;
+	score += calc_score_chess(board, color) * 5;
+	return score;
 }
 
 int dfs_score(Board *board, int color, int now_color, int limit) {
