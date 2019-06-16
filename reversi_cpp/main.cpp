@@ -133,14 +133,14 @@ int clac_score_point(Board *board, int color) {
 			}
 		}
 	}
-	return scoreMy - scoreOther;
+	return 100 * (scoreMy - scoreOther) / (scoreMy + scoreOther + 1);
 }
 
 // https://zh.wikipedia.org/wiki/行動力_(黑白棋)
 int calc_score_mobility(Board *board, int color) {
 	int moveMy = list_can_lay(board, color).size();
 	int moveOther = list_can_lay(board, other_color(color)).size();
-	return 100 * (moveMy - moveOther) / (moveMy + moveOther);
+	return 100 * (moveMy - moveOther) / (moveMy + moveOther + 1);
 }
 
 // 個數
@@ -156,7 +156,7 @@ int calc_score_chess(Board *board, int color) {
 			}
 		}
 	}
-	return 100 * (cntMy - cntOther) * (cntMy + cntOther);
+	return 100 * (cntMy - cntOther) * (cntMy + cntOther + 1);
 }
 
 int calc_score_stable_core(Board *board, int color) {
@@ -164,7 +164,7 @@ int calc_score_stable_core(Board *board, int color) {
 	int i;
 	i = 1;
 	// right
-	while (board->board[0][i] == color && i < BOARD_SIZE) {
+	while (board->board[1][i] == color && i < BOARD_SIZE) {
 		cnt++;
 		i++;
 	}
@@ -182,7 +182,7 @@ int calc_score_stable_core(Board *board, int color) {
 	}
 	i = BOARD_SIZE;
 	// right
-	while (board->board[i][0] == color && i > 1) {
+	while (board->board[i][1] == color && i > 1) {
 		cnt++;
 		i--;
 	}
@@ -193,7 +193,7 @@ int calc_score_stable_core(Board *board, int color) {
 int calc_score_stable(Board *board, int color) {
 	int cntMy = calc_score_stable_core(board, color);
 	int cntOther = calc_score_stable_core(board, other_color(color));
-	return 100 * (cntMy - cntOther) / (cntMy + cntOther);
+	return 100 * (cntMy - cntOther) / (cntMy + cntOther + 1);
 }
 
 int calc_score(Board *board, int color) {
