@@ -191,11 +191,11 @@ int dfs_score(Board *board, int color, int now_color, int limit) {
 	return score;
 }
 
-void check_next(Board *board, int color) {
+bool check_next(Board *board, int color) {
 	CAN_LAY_LIST can_lay = list_can_lay(board, color);
 	if (can_lay.size() == 0) {
 		cout << "No can lay" << endl;
-		return;
+		return false;
 	}
 	cout << can_lay.size() << " position to lay: ";
 	for (auto v : can_lay) {
@@ -221,6 +221,7 @@ void check_next(Board *board, int color) {
 	cout << "lay " << n2c[lay.first] << lay.second << " score " << best_score << endl;
 	do_lay(board, color, lay.first, lay.second);
 	show_board(board);
+	return true;
 }
 
 int main() {
@@ -247,31 +248,42 @@ int main() {
 	int layn, layc;
 
 	int turn = CHESS_BLACK;
+	int check_stuck = 0;
 
 	int temp = -1;
 	cout << "Input AI color (0: Black=First, not 0: White=Second): ";
 	cin >> temp;
 	cin.ignore();
+
 	if (temp == 1) {
 		goto other_turn;
 	}
 
 	while (true) {
 	my_turn:
+		if (check_stuck >= 2) break;
 		// AI turn
 		cout << "-------------------------------" << endl;
 		cout << "AI (" << ICON[turn] << ") turn" << endl;
-		check_next(board, turn);
+		if (check_next(board, turn)) {
+			check_stuck = 0;
+		} else {
+			check_stuck++;
+		}
 		turn = other_color(turn);
 	other_turn:
+		if (check_stuck >= 2) break;
+		// Player turn
 		CAN_LAY_LIST can_lay = list_can_lay(board, turn);
 		cout << "-------------------------------" << endl;
 		cout << "Player (" << ICON[turn] << ") turn" << endl;
 		if (can_lay.size() == 0) {
 			cout << "No can lay" << endl;
 			turn = other_color(turn);
+			check_stuck++;
 			goto my_turn;
 		}
+		check_stuck = 0;
 		cout << can_lay.size() << " position to lay: ";
 		for (auto v : can_lay) {
 			cout << n2c[v.first] << v.second << " ";
@@ -304,4 +316,6 @@ int main() {
 		show_board(board);
 		turn = other_color(turn);
 	}
+	cout << "-------------------------------" << endl;
+	cout << "Game over" << endl;
 }
