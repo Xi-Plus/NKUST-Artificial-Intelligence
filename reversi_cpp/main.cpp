@@ -111,6 +111,7 @@ CAN_LAY_LIST list_can_lay(Board *board, int color) {
 	return result;
 }
 
+// 分數
 const int POINT_SCORE[8][8] = {{100, -10, 8, 6, 6, 8, -10, 100},
 							   {-10, -25, -4, -4, -4, -4, -25, -10},
 							   {8, -4, 6, 4, 4, 6, -4, 8},
@@ -135,13 +136,14 @@ int clac_score_point(Board *board, int color) {
 	return scoreMy - scoreOther;
 }
 
-// https://zh.wikipedia.org/wiki/%E8%A1%8C%E5%8B%95%E5%8A%9B_(%E9%BB%91%E7%99%BD%E6%A3%8B)
+// https://zh.wikipedia.org/wiki/行動力_(黑白棋)
 int calc_score_mobility(Board *board, int color) {
 	int moveMy = list_can_lay(board, color).size();
 	int moveOther = list_can_lay(board, other_color(color)).size();
 	return 100 * (moveMy - moveOther) / (moveMy + moveOther);
 }
 
+// 個數
 int calc_score_chess(Board *board, int color) {
 	int cntMy = 0, cntOther = 0;
 	int other = other_color(color);
@@ -157,11 +159,49 @@ int calc_score_chess(Board *board, int color) {
 	return 100 * (cntMy - cntOther) * (cntMy + cntOther);
 }
 
+int calc_score_stable_core(Board *board, int color) {
+	int cnt = 0;
+	int i;
+	i = 1;
+	// right
+	while (board->board[0][i] == color && i < BOARD_SIZE) {
+		cnt++;
+		i++;
+	}
+	i = 1;
+	// down
+	while (board->board[i][BOARD_SIZE] == color && i < BOARD_SIZE) {
+		cnt++;
+		i++;
+	}
+	i = BOARD_SIZE;
+	// left
+	while (board->board[BOARD_SIZE][i] == color && i > 1) {
+		cnt++;
+		i--;
+	}
+	i = BOARD_SIZE;
+	// right
+	while (board->board[i][0] == color && i > 1) {
+		cnt++;
+		i--;
+	}
+	return cnt;
+}
+
+// https://zh.wikipedia.org/wiki/穩定子_(黑白棋)
+int calc_score_stable(Board *board, int color) {
+	int cntMy = calc_score_stable_core(board, color);
+	int cntOther = calc_score_stable_core(board, other_color(color));
+	return 100 * (cntMy - cntOther) / (cntMy + cntOther);
+}
+
 int calc_score(Board *board, int color) {
 	int score = 0;
 	score += clac_score_point(board, color) * 10;
 	score += calc_score_mobility(board, color) * 8;
 	score += calc_score_chess(board, color) * 5;
+	score += calc_score_stable(board, color) * 20;
 	return score;
 }
 
