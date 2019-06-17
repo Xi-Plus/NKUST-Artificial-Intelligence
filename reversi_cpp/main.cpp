@@ -198,7 +198,7 @@ int calc_score_stable(Board *board, int color) {
 
 int calc_score(Board *board, int color) {
 	int score = 0;
-	score += clac_score_point(board, color) * 10;
+	score += clac_score_point(board, color) * 30;
 	score += calc_score_mobility(board, color) * 8;
 	score += calc_score_chess(board, color) * 5;
 	score += calc_score_stable(board, color) * 20;
