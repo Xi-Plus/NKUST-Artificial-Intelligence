@@ -66,6 +66,7 @@ bool check_can_eat(Board *board, int color, int c, int n, int dc, int dn) {
 }
 
 inline bool check_can_lay(Board *board, int color, int c, int n) {
+	if (board->board[n][c] != CHESS_EMPTY) return false;
 	if (check_can_eat(board, color, c, n, 1, 1)) return true;
 	if (check_can_eat(board, color, c, n, 1, -1)) return true;
 	if (check_can_eat(board, color, c, n, -1, 1)) return true;
