@@ -294,7 +294,9 @@ bool check_next(Board *board, int color) {
 			best_score = score;
 		}
 	}
-	cout << "lay " << n2c[lay.first] << lay.second << " score " << best_score << endl;
+	cout << "=================================" << endl;
+	cout << "##### AI lay " << n2c[lay.first] << lay.second << " score " << best_score << " #####" << endl;
+	cout << "=================================" << endl;
 	do_lay(board, color, lay.first, lay.second);
 	show_board(board);
 	return true;
@@ -387,7 +389,6 @@ int main() {
 			}
 			break;
 		}
-		cout << "lay " << layc << " " << layn << endl;
 		do_lay(board, turn, layc, layn);
 		show_board(board);
 		turn = other_color(turn);
