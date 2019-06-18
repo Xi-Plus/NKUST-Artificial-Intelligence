@@ -289,6 +289,11 @@ bool check_next(Board *board, int color) {
 	Board *new_board = new Board();
 	iskill = false;
 	for (auto v : can_lay) {
+		if ((v.first == 1 && v.second == 1) || (v.first == 1 && v.second == 8) || (v.first == 8 && v.second == 1) || (v.first == 8 && v.second == 8)) {
+			lay = v;
+			best_score = INT_MAX / 2;
+			break;
+		}
 		memcpy(new_board, board, sizeof(*board));
 		do_lay(new_board, color, v.first, v.second);
 		assert(score_list.size() == 0);
