@@ -242,10 +242,12 @@ int dfs_score(Board *board, int color, int now_color, int limit) {
 	// cout << can_lay.size() << " can lay" << endl;
 	if (can_lay.size() == 0) {
 		// If other cannot lay, return max
-		if (color == now_color) {
-			return INT_MAX / 2;
-		} else {
-			return INT_MIN / 2;
+		if (limit == DFS_LIMIT) {
+			if (color == now_color) {
+				return INT_MAX / 2;
+			} else {
+				return INT_MIN / 2;
+			}
 		}
 		int score = calc_score(board, color);
 		// cout << "B limit " << limit << " color " << color << "/" << now_color << " result " << score << endl;
