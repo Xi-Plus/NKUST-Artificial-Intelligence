@@ -240,7 +240,7 @@ int dfs_score(Board *board, int color, int now_color, int limit) {
 		// MAX
 		score = INT_MIN;
 		for (auto lay : can_lay) {
-			if (score >= score_list.top() && score != INT_MIN && score != INT_MAX) {
+			if (score >= score_list.top() && score != INT_MIN) {
 				// cout << "A Skip " << limit << " " << score << " " << score_list.top() << " " << score_list.size() << endl;
 				continue;
 			}
@@ -256,7 +256,7 @@ int dfs_score(Board *board, int color, int now_color, int limit) {
 		// MIN
 		score = INT_MAX;
 		for (auto lay : can_lay) {
-			if (score >= score_list.top() && score != INT_MAX && score != INT_MIN) {
+			if (score <= score_list.top() && score != INT_MAX) {
 				// cout << "B Skip " << limit << " " << score << " " << score_list.top() << " " << score_list.size() << endl;
 				continue;
 			}
