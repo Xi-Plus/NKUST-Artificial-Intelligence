@@ -64,7 +64,7 @@ void show_board(Board *b) {
 		WEIGHT_STABLE = 40;
 	}
 	if (cntSum > 40) {
-		WEIGHT_POINT = 0;
+		WEIGHT_POINT = 15;
 		WEIGHT_MOBILITY = 8;
 		WEIGHT_CHESS = 5;
 		WEIGHT_STABLE = 20;
