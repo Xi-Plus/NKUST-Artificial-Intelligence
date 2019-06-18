@@ -19,6 +19,10 @@ char n2c[BOARD_SIZE + 1];
 typedef vector<pair<int, int>> CAN_LAY_LIST;
 stack<int> score_list;
 bool iskill = false;
+int WEIGHT_POINT = 30;
+int WEIGHT_MOBILITY = 8;
+int WEIGHT_CHESS = 5;
+int WEIGHT_STABLE = 20;
 
 struct Board {
 	int board[BOARD_SIZE + 2][BOARD_SIZE + 2] = {};
@@ -52,6 +56,19 @@ void show_board(Board *b) {
 	}
 	cout << ICON_WALL << endl;
 	cout << ICON_BLACK << ": " << cntB << " " << ICON_WHITE << ": " << cntW << endl;
+	int cntSum = cntB + cntB;
+	if (cntSum > 20) {
+		WEIGHT_POINT = 15;
+		WEIGHT_MOBILITY = 20;
+		WEIGHT_CHESS = 10;
+		WEIGHT_STABLE = 40;
+	}
+	if (cntSum > 40) {
+		WEIGHT_POINT = 0;
+		WEIGHT_MOBILITY = 8;
+		WEIGHT_CHESS = 5;
+		WEIGHT_STABLE = 20;
+	}
 }
 
 bool check_can_eat(Board *board, int color, int c, int n, int dc, int dn) {
@@ -200,10 +217,10 @@ int calc_score_stable(Board *board, int color) {
 
 int calc_score(Board *board, int color) {
 	int score = 0;
-	score += clac_score_point(board, color) * 30;
-	score += calc_score_mobility(board, color) * 8;
-	score += calc_score_chess(board, color) * 5;
-	score += calc_score_stable(board, color) * 20;
+	score += clac_score_point(board, color) * WEIGHT_POINT;
+	score += calc_score_mobility(board, color) * WEIGHT_MOBILITY;
+	score += calc_score_chess(board, color) * WEIGHT_CHESS;
+	score += calc_score_stable(board, color) * WEIGHT_STABLE;
 	return score;
 }
 
