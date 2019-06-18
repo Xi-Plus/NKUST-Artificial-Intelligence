@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#include <conio.h>
 using namespace std;
 
 #define BOARD_SIZE 8
@@ -17,6 +18,7 @@ int c2n[255] = {};
 char n2c[BOARD_SIZE + 1];
 typedef vector<pair<int, int>> CAN_LAY_LIST;
 stack<int> score_list;
+bool iskill = false;
 
 struct Board {
 	int board[BOARD_SIZE + 2][BOARD_SIZE + 2] = {};
@@ -208,7 +210,13 @@ int calc_score(Board *board, int color) {
 int dfs_score(Board *board, int color, int now_color, int limit) {
 	// cout << "dfs_score " << color << " " << now_color << " " << limit << endl;
 	// show_board(board);
-	if (limit == 1) {
+	if (kbhit()) {
+		if (getch() == 'q') {
+			cout << "killed" << endl;
+			iskill = true;
+		}
+	}
+	if (limit == 1 || iskill) {
 		int score = calc_score(board, color);
 		// cout << "A limit " << limit << " color " << color << "/" << now_color << " result " << score << endl;
 		return score;
@@ -273,6 +281,7 @@ bool check_next(Board *board, int color) {
 	int best_score = INT_MIN, score;
 	pair<int, int> lay;
 	Board *new_board = new Board();
+	iskill = false;
 	for (auto v : can_lay) {
 		memcpy(new_board, board, sizeof(*board));
 		do_lay(new_board, color, v.first, v.second);
